@@ -52,6 +52,17 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Custom barber shop colors
+				gold: {
+					DEFAULT: 'hsl(var(--gold))',
+					dark: 'hsl(var(--gold-dark))'
+				},
+				bronze: 'hsl(var(--bronze))',
+				charcoal: 'hsl(var(--charcoal))',
+				slate: {
+					DEFAULT: 'hsl(var(--slate))',
+					light: 'hsl(var(--slate-light))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -67,6 +78,16 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			backgroundImage: {
+				'gradient-gold': 'var(--gradient-gold)',
+				'gradient-dark': 'var(--gradient-dark)',
+				'gradient-hero': 'var(--gradient-hero)'
+			},
+			boxShadow: {
+				'gold': 'var(--shadow-gold)',
+				'dark': 'var(--shadow-dark)',
+				'luxury': 'var(--shadow-luxury)'
 			},
 			keyframes: {
 				'accordion-down': {
@@ -84,11 +105,42 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					from: {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					to: {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'slide-up': {
+					from: {
+						opacity: '0',
+						transform: 'translateY(40px)'
+					},
+					to: {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'gold-glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px hsl(45 100% 65% / 0.3)'
+					},
+					'50%': {
+						boxShadow: '0 0 30px hsl(45 100% 65% / 0.5)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.6s ease-out',
+				'slide-up': 'slide-up 0.8s ease-out',
+				'gold-glow': 'gold-glow 2s ease-in-out infinite'
 			}
 		}
 	},

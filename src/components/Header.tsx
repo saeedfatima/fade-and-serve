@@ -19,8 +19,11 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#home" className="text-foreground hover:text-primary transition-colors">
+            <a href="/" className="text-foreground hover:text-primary transition-colors">
               Home
+            </a>
+            <a href="/about" className="text-foreground hover:text-primary transition-colors">
+              About
             </a>
             <a href="#services" className="text-foreground hover:text-primary transition-colors">
               Services
@@ -31,7 +34,7 @@ const Header = () => {
             <a href="#gallery" className="text-foreground hover:text-primary transition-colors">
               Gallery
             </a>
-            <a href="#contact" className="text-foreground hover:text-primary transition-colors">
+            <a href="/contact" className="text-foreground hover:text-primary transition-colors">
               Contact
             </a>
           </nav>
@@ -61,8 +64,11 @@ const Header = () => {
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pt-4 border-t border-border">
             <div className="flex flex-col space-y-4">
-              <a href="#home" className="text-foreground hover:text-primary transition-colors">
+              <a href="/" className="text-foreground hover:text-primary transition-colors">
                 Home
+              </a>
+              <a href="/about" className="text-foreground hover:text-primary transition-colors">
+                About
               </a>
               <a href="#services" className="text-foreground hover:text-primary transition-colors">
                 Services
@@ -73,7 +79,7 @@ const Header = () => {
               <a href="#gallery" className="text-foreground hover:text-primary transition-colors">
                 Gallery
               </a>
-              <a href="#contact" className="text-foreground hover:text-primary transition-colors">
+              <a href="/contact" className="text-foreground hover:text-primary transition-colors">
                 Contact
               </a>
               <div className="flex flex-col space-y-2 pt-4">

@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Scissors, User, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, userRole } = useAuth();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -42,14 +44,29 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-              <User className="h-4 w-4 mr-2" />
-              Login
-            </Button>
-            <Button size="sm" className="bg-gradient-gold text-primary-foreground shadow-gold hover:shadow-luxury">
-              <Calendar className="h-4 w-4 mr-2" />
-              Book Now
-            </Button>
+            {user ? (
+              <Button asChild size="sm" className="bg-gradient-gold text-primary-foreground shadow-gold hover:shadow-luxury">
+                <Link to={userRole === 'staff' || userRole === 'admin' ? '/staff-dashboard' : '/dashboard'}>
+                  <User className="h-4 w-4 mr-2" />
+                  Dashboard
+                </Link>
+              </Button>
+            ) : (
+              <>
+                <Button asChild variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                  <Link to="/auth">
+                    <User className="h-4 w-4 mr-2" />
+                    Login
+                  </Link>
+                </Button>
+                <Button asChild size="sm" className="bg-gradient-gold text-primary-foreground shadow-gold hover:shadow-luxury">
+                  <Link to="/services">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Book Now
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -84,14 +101,29 @@ const Header = () => {
                 Contact
               </Link>
               <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                  <User className="h-4 w-4 mr-2" />
-                  Login
-                </Button>
-                <Button size="sm" className="bg-gradient-gold text-primary-foreground shadow-gold">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Book Now
-                </Button>
+                {user ? (
+                  <Button asChild size="sm" className="bg-gradient-gold text-primary-foreground shadow-gold">
+                    <Link to={userRole === 'staff' || userRole === 'admin' ? '/staff-dashboard' : '/dashboard'}>
+                      <User className="h-4 w-4 mr-2" />
+                      Dashboard
+                    </Link>
+                  </Button>
+                ) : (
+                  <>
+                    <Button asChild variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                      <Link to="/auth">
+                        <User className="h-4 w-4 mr-2" />
+                        Login
+                      </Link>
+                    </Button>
+                    <Button asChild size="sm" className="bg-gradient-gold text-primary-foreground shadow-gold">
+                      <Link to="/services">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        Book Now
+                      </Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </nav>

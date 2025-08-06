@@ -99,6 +99,25 @@ const Dashboard = () => {
     }
   };
 
+  const handleCancelBooking = async (bookingId: string) => {
+    try {
+      const { error } = await supabase
+        .from('bookings')
+        .update({ status: 'cancelled' })
+        .eq('id', bookingId);
+
+      if (error) {
+        console.error('Error cancelling booking:', error);
+        return;
+      }
+
+      // Refresh bookings
+      fetchUserBookings();
+    } catch (error) {
+      console.error('Error cancelling booking:', error);
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut();
   };
@@ -168,7 +187,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent className="space-y-2">
               <Button className="w-full" asChild>
-                <a href="/services">Book New Appointment</a>
+                <a href="/book-service">Book New Appointment</a>
               </Button>
               <Button variant="outline" className="w-full" asChild>
                 <a href="/gallery">View Gallery</a>
@@ -192,7 +211,7 @@ const Dashboard = () => {
               <div className="text-center py-8">
                 <p className="text-muted-foreground mb-4">No appointments yet</p>
                 <Button asChild>
-                  <a href="/services">Book Your First Appointment</a>
+                  <a href="/book-service">Book Your First Appointment</a>
                 </Button>
               </div>
             ) : (
@@ -227,6 +246,16 @@ const Dashboard = () => {
                       <p className="text-sm font-semibold mt-1">
                         ${booking.service_price}
                       </p>
+                      {booking.status === 'pending' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleCancelBooking(booking.id)}
+                          className="mt-2 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                        >
+                          Cancel
+                        </Button>
+                      )}
                     </div>
                   </div>
                 ))}

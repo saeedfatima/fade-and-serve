@@ -114,6 +114,7 @@ const Services = () => {
                     </div>
                     <Button 
                       className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 hover:shadow-glow"
+                      onClick={() => window.location.href = `/book-service?service=${encodeURIComponent(service.name)}`}
                     >
                       Book Now
                     </Button>

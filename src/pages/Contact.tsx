@@ -50,7 +50,7 @@ const Contact = () => {
                   <Phone className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Phone</h3>
-                    <p className="text-muted-foreground">(234) 9060595221</p>
+                    <p className="text-muted-foreground">08131851093</p>
                   </div>
                 </div>
                 
@@ -58,7 +58,7 @@ const Contact = () => {
                   <Mail className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                    <p className="text-muted-foreground">info@specialcut.com</p>
+                    <p className="text-muted-foreground">info@yustikum.com</p>
                   </div>
                 </div>
                 
@@ -110,12 +110,12 @@ const Contact = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="info@specialcut.com" />
+                  <Input id="email" type="email" placeholder="info@yustikum.com" />
                 </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" placeholder="(234) 9060595221" />
+                  <Input id="phone" type="tel" placeholder="08131851093" />
                 </div>
                 
                 <div className="space-y-2">

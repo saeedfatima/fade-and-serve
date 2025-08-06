@@ -12,7 +12,7 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-              About FadeShop
+              About YUSTIKUM BARBER
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Where tradition meets modern style. We've been crafting exceptional haircuts and providing premium grooming services for over a decade.
@@ -30,7 +30,7 @@ const About = () => {
                 Our Story
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Founded in 2012, FadeShop began as a small neighborhood barbershop with a simple mission: to provide exceptional haircuts in a welcoming environment. Over the years, we've grown into the city's premier destination for men's grooming.
+                Founded in 2012, YUSTIKUM BARBER began as a small neighborhood barbershop with a simple mission: to provide exceptional haircuts in a welcoming environment. Over the years, we've grown into the city's premier destination for men's grooming.
               </p>
               <p className="text-lg text-muted-foreground mb-6">
                 Our master barbers combine traditional techniques with contemporary styles, ensuring every client leaves looking and feeling their absolute best. We believe that a great haircut is more than just a service—it's an experience.

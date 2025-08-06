@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Scissors className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold">FadeShop</span>
+              <span className="text-2xl font-bold">YUSTIKUM BARBER</span>
             </div>
             <p className="text-muted-foreground">
               Premium barbering experience where traditional craftsmanship meets modern style.
@@ -60,11 +60,11 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">(555) 123-4567</span>
+                <span className="text-muted-foreground">08131851093</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">info@fadeshop.com</span>
+                <span className="text-muted-foreground">info@yustikum.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4 text-primary" />
@@ -100,7 +100,7 @@ const Footer = () => {
 
         <div className="border-t border-border mt-8 pt-8 text-center">
           <p className="text-muted-foreground">
-            © 2024 FadeShop. All rights reserved. Built with precision and care.
+            © 2024 YUSTIKUM BARBER. All rights reserved. Built with precision and care.
           </p>
         </div>
       </div>

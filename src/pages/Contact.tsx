@@ -40,8 +40,8 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Location</h3>
                     <p className="text-muted-foreground">
-                      123 Main Street<br />
-                      Downtown, NY 10001
+                      123 chiranchi takumashi<br />
+                      Downtown, kano 10001
                     </p>
                   </div>
                 </div>
@@ -110,12 +110,12 @@ const Contact = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" />
+                  <Input id="email" type="email" placeholder="info@specialcut.com" />
                 </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" placeholder="(555) 123-4567" />
+                  <Input id="phone" type="tel" placeholder="(234) 9060595221" />
                 </div>
                 
                 <div className="space-y-2">

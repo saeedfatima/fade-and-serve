@@ -9,56 +9,56 @@ const haircutData = [
   {
     id: 1,
     name: 'Classic Fade',
-    price: '$35',
+    price: '₦6,000',
     image: haircutStyles,
     category: 'Fade'
   },
   {
     id: 2,
     name: 'Skin Fade',
-    price: '$40',
+    price: '₦3,000',
     image: barberCutting,
     category: 'Fade'
   },
   {
     id: 3,
     name: 'Pompadour',
-    price: '$45',
+    price: '₦5,000',
     image: haircutStyles,
     category: 'Classic'
   },
   {
     id: 4,
     name: 'Undercut',
-    price: '$30',
+    price: '₦9,000',
     image: barberCutting,
     category: 'Modern'
   },
   {
     id: 5,
     name: 'Buzz Cut',
-    price: '$20',
+    price: '₦12,000',
     image: haircutStyles,
     category: 'Classic'
   },
   {
     id: 6,
     name: 'Textured Crop',
-    price: '$38',
+    price: '₦18,000',
     image: barberCutting,
     category: 'Modern'
   },
   {
     id: 7,
     name: 'Mid Fade',
-    price: '$35',
+    price: '₦4,000',
     image: haircutStyles,
     category: 'Fade'
   },
   {
     id: 8,
     name: 'Quiff',
-    price: '$42',
+    price: '₦7,000',
     image: barberCutting,
     category: 'Classic'
   }

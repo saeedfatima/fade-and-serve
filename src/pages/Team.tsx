@@ -14,7 +14,7 @@ const barbers = [
     specialties: ["Classic Cuts", "Beard Styling", "Straight Razor"],
     rating: 4.9,
     image: barberProfile,
-    bio: "Marcus founded Elite Cuts with a vision to bring traditional barbering excellence to modern times. His attention to detail and passion for the craft have made him a sought-after barber.",
+    bio: "yusuf founded Elite Cuts with a vision to bring traditional barbering excellence to modern times. His attention to detail and passion for the craft have made him a sought-after barber.",
     featured: true,
   },
   {
@@ -25,7 +25,7 @@ const barbers = [
     specialties: ["Modern Fades", "Hair Design", "Styling"],
     rating: 4.8,
     image: barberProfile,
-    bio: "David specializes in contemporary cuts and innovative styling techniques. He stays updated with the latest trends while maintaining classic barbering standards.",
+    bio: "abubakar specializes in contemporary cuts and innovative styling techniques. He stays updated with the latest trends while maintaining classic barbering standards.",
     featured: false,
   },
   {
@@ -36,7 +36,7 @@ const barbers = [
     specialties: ["Classic Cuts", "Pompadours", "Grooming"],
     rating: 4.7,
     image: barberProfile,
-    bio: "James brings creativity and precision to every cut. His friendly personality and skilled hands ensure every client leaves feeling confident and looking sharp.",
+    bio: "kashim brings creativity and precision to every cut. His friendly personality and skilled hands ensure every client leaves feeling confident and looking sharp.",
     featured: false,
   },
   {
@@ -47,7 +47,7 @@ const barbers = [
     specialties: ["Fades", "Beard Trims", "Hot Towel Shaves"],
     rating: 4.8,
     image: barberProfile,
-    bio: "Antonio is known for his meticulous fade work and relaxing hot towel shaves. He believes in creating a comfortable experience for every client.",
+    bio: "Musa is known for his meticulous fade work and relaxing hot towel shaves. He believes in creating a comfortable experience for every client.",
     featured: false,
   },
 ];

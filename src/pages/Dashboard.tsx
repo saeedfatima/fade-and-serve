@@ -8,6 +8,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ProfileManager from '@/components/ProfileManager';
 
 interface Booking {
   id: string;
@@ -147,25 +148,8 @@ const Dashboard = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {/* Profile Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="w-5 h-5" />
-                Profile
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <p><strong>Name:</strong> {profile?.first_name} {profile?.last_name}</p>
-                <p><strong>Email:</strong> {user?.email}</p>
-                <p><strong>Phone:</strong> {profile?.phone || 'Not provided'}</p>
-                <p><strong>Role:</strong> <Badge variant="secondary">{userRole}</Badge></p>
-              </div>
-            </CardContent>
-          </Card>
-
           {/* Quick Stats */}
+
           <Card>
             <CardHeader>
               <CardTitle>Appointment Stats</CardTitle>
@@ -194,6 +178,11 @@ const Dashboard = () => {
               </Button>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Profile Management */}
+        <div className="mt-8">
+          <ProfileManager />
         </div>
 
         {/* Recent Bookings */}

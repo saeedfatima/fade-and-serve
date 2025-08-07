@@ -34,11 +34,11 @@ const Header = () => {
             <Link to="/team" className="text-foreground hover:text-primary transition-colors">
               Team
             </Link>
-            <Link to="/about" className="text-foreground hover:text-primary transition-colors">
-              About
-            </Link>
             <Link to="/contact" className="text-foreground hover:text-primary transition-colors">
               Contact
+            </Link>
+            <Link to="/about" className="text-foreground hover:text-primary transition-colors">
+              About
             </Link>
           </nav>
 
@@ -94,11 +94,11 @@ const Header = () => {
               <Link to="/team" className="text-foreground hover:text-primary transition-colors">
                 Team
               </Link>
-              <Link to="/about" className="text-foreground hover:text-primary transition-colors">
-                About
-              </Link>
               <Link to="/contact" className="text-foreground hover:text-primary transition-colors">
                 Contact
+              </Link>
+              <Link to="/about" className="text-foreground hover:text-primary transition-colors">
+                About
               </Link>
               <div className="flex flex-col space-y-2 pt-4">
                 {user ? (

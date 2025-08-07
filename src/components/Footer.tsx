@@ -1,4 +1,4 @@
-import { Scissors, Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter, Whatsapp, TikTok } from 'lucide-react';
+import { Scissors, Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter} from 'lucide-react';
 
 const Footer = () => {
   return (

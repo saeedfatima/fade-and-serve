@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Twitter } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Twitter} from 'lucide-react';
 
 const Contact = () => {
   return (
@@ -88,6 +88,10 @@ const Contact = () => {
                   <Button variant="outline" size="icon" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                     <Twitter className="h-4 w-4" />
                   </Button>
+                  <Button variant="outline" size="icon" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                    <Mail className="h-4 w-4" />
+                  </Button>
+
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { Scissors, Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Scissors, Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter, Whatsapp, TikTok } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -68,7 +68,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">123 Main Street, Downtown</span>
+                <span className="text-muted-foreground">123 chiranchi takumashi, sheikh jaafar road</span>
               </div>
             </div>
           </div>

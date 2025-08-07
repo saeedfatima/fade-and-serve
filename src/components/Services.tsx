@@ -7,7 +7,7 @@ const services = [
     id: 1,
     name: 'Classic Cut',
     description: 'Traditional haircut with precision and style',
-    price: '$25',
+    price: '₦4,000',
     duration: '30 min',
     icon: Scissors,
     popular: false
@@ -16,7 +16,7 @@ const services = [
     id: 2,
     name: 'Premium Fade',
     description: 'Modern fade with detailed styling and finish',
-    price: '$35',
+    price: '₦6,000',
     duration: '45 min',
     icon: Zap,
     popular: true
@@ -25,7 +25,7 @@ const services = [
     id: 3,
     name: 'Beard Trim',
     description: 'Professional beard styling and grooming',
-    price: '$20',
+    price: '₦3,000',
     duration: '25 min',
     icon: Sparkles,
     popular: false
@@ -34,7 +34,7 @@ const services = [
     id: 4,
     name: 'Royal Package',
     description: 'Complete grooming experience with hot towel service',
-    price: '$60',
+    price: '₦10,000',
     duration: '90 min',
     icon: Crown,
     popular: false
@@ -43,7 +43,7 @@ const services = [
     id: 5,
     name: 'Skin Fade',
     description: 'Ultra-precise skin fade with sharp lines',
-    price: '$40',
+    price: '₦90,000',
     duration: '50 min',
     icon: Zap,
     popular: true
@@ -52,7 +52,7 @@ const services = [
     id: 6,
     name: 'Deluxe Cut & Style',
     description: 'Cut, wash, style with premium products',
-    price: '$45',
+    price: '₦8,000',
     duration: '60 min',
     icon: Crown,
     popular: false

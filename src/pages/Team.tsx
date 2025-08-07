@@ -8,9 +8,9 @@ import barberProfile from "@/assets/barber-profile.jpg";
 const barbers = [
   {
     id: 1,
-    name: "Marcus Johnson",
-    title: "Master Barber & Owner",
-    experience: "15+ years",
+    name: "Yusuf Tijjani",
+    title: "Master Barber & CEO",
+    experience: "10+ years",
     specialties: ["Classic Cuts", "Beard Styling", "Straight Razor"],
     rating: 4.9,
     image: barberProfile,
@@ -19,7 +19,7 @@ const barbers = [
   },
   {
     id: 2,
-    name: "David Rodriguez",
+    name: "ABUBAKAR SANI",
     title: "Senior Barber",
     experience: "10+ years",
     specialties: ["Modern Fades", "Hair Design", "Styling"],
@@ -30,7 +30,7 @@ const barbers = [
   },
   {
     id: 3,
-    name: "James Wilson",
+    name: "KASHIM MUHAMUD",
     title: "Barber",
     experience: "7+ years",
     specialties: ["Classic Cuts", "Pompadours", "Grooming"],
@@ -41,7 +41,7 @@ const barbers = [
   },
   {
     id: 4,
-    name: "Antonio Silva",
+    name: "MUSA IBRAHIM",
     title: "Barber",
     experience: "5+ years",
     specialties: ["Fades", "Beard Trims", "Hot Towel Shaves"],

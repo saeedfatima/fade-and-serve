@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, Clock, DollarSign } from "lucide-react";
+import { CalendarIcon, Clock, Banknote } from "lucide-react";
 import { format } from "date-fns";
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
@@ -17,12 +17,12 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const services = [
-  { id: 1, name: "Classic Haircut", price: 30, duration: "45 min" },
-  { id: 2, name: "Beard Trim", price: 20, duration: "30 min" },
-  { id: 3, name: "Premium Cut & Style", price: 50, duration: "60 min" },
-  { id: 4, name: "Hot Towel Shave", price: 35, duration: "45 min" },
-  { id: 5, name: "Father & Son Cut", price: 60, duration: "90 min" },
-  { id: 6, name: "The Full Service", price: 75, duration: "120 min" },
+  { id: 1, name: "Classic Haircut", price: 3000, duration: "45 min" },
+  { id: 2, name: "Beard Trim", price: 2000, duration: "30 min" },
+  { id: 3, name: "Premium Cut & Style", price: 5000, duration: "60 min" },
+  { id: 4, name: "Hot Towel Shave", price: 4000, duration: "45 min" },
+  { id: 5, name: "Father & Son Cut", price: 6000, duration: "90 min" },
+  { id: 6, name: "The Full Service", price: 8000, duration: "120 min" },
 ];
 
 const timeSlots = [
@@ -144,8 +144,8 @@ const BookService = () => {
                           <span>{service.name}</span>
                           <div className="flex items-center gap-2 ml-4">
                             <div className="flex items-center gap-1">
-                              <DollarSign className="h-3 w-3" />
-                              <span className="text-sm">${service.price}</span>
+                              <Banknote className="h-3 w-3" />
+                              <span className="text-sm">₦{service.price.toLocaleString()}</span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Clock className="h-3 w-3" />
@@ -167,8 +167,8 @@ const BookService = () => {
                       <h3 className="font-semibold">{selectedServiceData.name}</h3>
                       <div className="flex items-center gap-4 text-sm">
                         <div className="flex items-center gap-1">
-                          <DollarSign className="h-4 w-4 text-primary" />
-                          <span className="font-semibold">${selectedServiceData.price}</span>
+                          <Banknote className="h-4 w-4 text-primary" />
+                          <span className="font-semibold">₦{selectedServiceData.price.toLocaleString()}</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4 text-primary" />

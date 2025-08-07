@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Scissors, Clock, DollarSign } from "lucide-react";
+import { Scissors, Clock, Banknote } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -10,7 +10,7 @@ const services = [
     id: 1,
     name: "Classic Haircut",
     description: "Traditional men's haircut with precision and style",
-    price: "$30",
+    price: "₦3,000",
     duration: "45 min",
     icon: Scissors,
     popular: false,
@@ -19,7 +19,7 @@ const services = [
     id: 2,
     name: "Beard Trim",
     description: "Professional beard shaping and trimming",
-    price: "$20",
+    price: "₦2,000",
     duration: "30 min",
     icon: Scissors,
     popular: false,
@@ -28,7 +28,7 @@ const services = [
     id: 3,
     name: "Premium Cut & Style",
     description: "Complete haircut with wash, cut, and styling",
-    price: "$50",
+    price: "₦5,000",
     duration: "60 min",
     icon: Scissors,
     popular: true,
@@ -37,7 +37,7 @@ const services = [
     id: 4,
     name: "Hot Towel Shave",
     description: "Luxurious traditional straight razor shave",
-    price: "$35",
+    price: "₦4,000",
     duration: "45 min",
     icon: Scissors,
     popular: false,
@@ -46,7 +46,7 @@ const services = [
     id: 5,
     name: "Father & Son Cut",
     description: "Special package for father and son haircuts",
-    price: "$60",
+    price: "₦6,000",
     duration: "90 min",
     icon: Scissors,
     popular: false,
@@ -55,7 +55,7 @@ const services = [
     id: 6,
     name: "The Full Service",
     description: "Complete grooming experience with cut, beard, and styling",
-    price: "$75",
+    price: "₦8,000",
     duration: "120 min",
     icon: Scissors,
     popular: true,
@@ -104,7 +104,7 @@ const Services = () => {
                     <p className="text-muted-foreground">{service.description}</p>
                     <div className="flex justify-center items-center gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
-                        <DollarSign className="h-4 w-4" />
+                        <Banknote className="h-4 w-4" />
                         <span className="font-semibold text-primary">{service.price}</span>
                       </div>
                       <div className="flex items-center gap-1">

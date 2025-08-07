@@ -60,7 +60,7 @@ const Header = () => {
                   </Link>
                 </Button>
                 <Button asChild size="sm" className="bg-gradient-gold text-primary-foreground shadow-gold hover:shadow-luxury">
-                  <Link to="/services">
+                  <Link to="/book-service">
                     <Calendar className="h-4 w-4 mr-2" />
                     Book Now
                   </Link>
@@ -117,7 +117,7 @@ const Header = () => {
                       </Link>
                     </Button>
                     <Button asChild size="sm" className="bg-gradient-gold text-primary-foreground shadow-gold">
-                      <Link to="/services">
+                      <Link to="/book-service">
                         <Calendar className="h-4 w-4 mr-2" />
                         Book Now
                       </Link>

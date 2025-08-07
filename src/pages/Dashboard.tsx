@@ -233,7 +233,7 @@ const Dashboard = () => {
                         {booking.status}
                       </Badge>
                       <p className="text-sm font-semibold mt-1">
-                        ${booking.service_price}
+                        ₦{booking.service_price.toLocaleString()}
                       </p>
                       {booking.status === 'pending' && (
                         <Button

@@ -41,7 +41,7 @@ const Contact = () => {
                     <h3 className="font-semibold text-foreground mb-1">Location</h3>
                     <p className="text-muted-foreground">
                       123 chiranchi takumashi<br />
-                      Downtown, kano 10001
+                      sheikh jaafar Road, kano 10001
                     </p>
                   </div>
                 </div>

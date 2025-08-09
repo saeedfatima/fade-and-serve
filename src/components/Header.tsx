@@ -17,7 +17,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <Scissors className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold text-foreground">YUSTIKUM BARBER</span>
+            <span className="text-2xl font-bold text-foreground">YUSTIKUM BARBER SHOP</span>
           </div>
 
           {/* Desktop Navigation */}

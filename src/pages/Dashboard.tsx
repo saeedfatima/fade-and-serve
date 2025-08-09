@@ -3,12 +3,13 @@ import { Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Clock, User, LogOut } from 'lucide-react';
+import { Calendar, Clock } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProfileManager from '@/components/ProfileManager';
+import UserMenu from '@/components/UserMenu';
 
 interface Booking {
   id: string;
@@ -119,9 +120,6 @@ const Dashboard = () => {
     }
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-  };
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -141,10 +139,7 @@ const Dashboard = () => {
             <h1 className="text-3xl font-bold">Welcome back, {profile?.first_name || 'User'}!</h1>
             <p className="text-muted-foreground">Manage your appointments and profile</p>
           </div>
-          <Button onClick={handleSignOut} variant="outline">
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
+          <UserMenu />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -30,7 +30,8 @@ const ProfileManager = () => {
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (user) {
       fetchProfile();
@@ -108,6 +109,64 @@ const ProfileManager = () => {
     setProfile(prev => ({ ...prev, [field]: value }));
   };
 
+  // Avatar upload/remove handlers
+  const handlePickFile = () => fileInputRef.current?.click();
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+    setUploading(true);
+    try {
+      const ext = file.name.split('.').pop();
+      const filePath = `${user.id}/${Date.now()}.${ext}`;
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, { contentType: file.type });
+      if (uploadError) throw uploadError;
+
+      const { data: publicData } = supabase.storage.from('avatars').getPublicUrl(filePath);
+      const publicUrl = publicData.publicUrl;
+
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: publicUrl })
+        .eq('user_id', user.id);
+      if (updateError) throw updateError;
+
+      setProfile(prev => ({ ...prev, avatar_url: publicUrl }));
+      toast({ title: 'Avatar updated', description: 'Your profile picture has been updated.' });
+    } catch (err) {
+      console.error('Error uploading avatar:', err);
+      toast({ title: 'Upload failed', description: 'Could not upload image.', variant: 'destructive' });
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleRemoveAvatar = async () => {
+    if (!user) return;
+    try {
+      const url = profile.avatar_url;
+      if (url && url.includes('/object/public/avatars/')) {
+        const path = url.split('/object/public/avatars/')[1];
+        if (path) {
+          await supabase.storage.from('avatars').remove([path]);
+        }
+      }
+      const { error } = await supabase
+        .from('profiles')
+        .update({ avatar_url: '' })
+        .eq('user_id', user.id);
+      if (error) throw error;
+      setProfile(prev => ({ ...prev, avatar_url: '' }));
+      toast({ title: 'Avatar removed', description: 'Your profile picture has been removed.' });
+    } catch (err) {
+      console.error('Error removing avatar:', err);
+      toast({ title: 'Remove failed', description: 'Could not remove image.', variant: 'destructive' });
+    }
+  };
+
   if (loading) {
     return <div className="text-center py-8">Loading profile...</div>;
   }
@@ -127,14 +186,14 @@ const ProfileManager = () => {
         {/* Avatar Section */}
         <div className="flex flex-col items-center space-y-4">
           <Avatar className="w-24 h-24">
-            <AvatarImage src={profile.avatar_url} />
+            <AvatarImage src={profile.avatar_url} alt="Profile avatar" />
             <AvatarFallback className="text-lg bg-primary text-primary-foreground">
               {profile.first_name.charAt(0)}{profile.last_name.charAt(0)}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col items-center space-y-2">
             <Label htmlFor="avatar-url">Profile Picture URL</Label>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               <Input
                 id="avatar-url"
                 placeholder="https://example.com/image.jpg"
@@ -142,9 +201,25 @@ const ProfileManager = () => {
                 onChange={(e) => handleInputChange('avatar_url', e.target.value)}
                 className="max-w-xs"
               />
-              <Button variant="outline" size="icon">
+
+              {/* Hidden file input for uploads */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+
+              <Button variant="outline" size="icon" onClick={handlePickFile} disabled={uploading} title="Upload new photo">
                 <Camera className="w-4 h-4" />
               </Button>
+
+              {profile.avatar_url && (
+                <Button variant="destructive" size="sm" onClick={handleRemoveAvatar} disabled={uploading}>
+                  Remove
+                </Button>
+              )}
             </div>
           </div>
         </div>

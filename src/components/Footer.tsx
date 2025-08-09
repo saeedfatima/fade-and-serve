@@ -12,7 +12,7 @@ const Footer = () => {
               <span className="text-2xl font-bold">YUSTIKUM BARBER</span>
             </div>
             <p className="text-muted-foreground">
-              Premium barbering experience where traditional craftsmanship meets modern style.
+              Premium barbing experience where traditional craftsmanship meets modern style.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
@@ -68,7 +68,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">123 chiranchi takumashi, sheikh jaafar road</span>
+                <span className="text-muted-foreground">123 chiranchi opp takumashi layin rijiya, sheikh jaafar road, kumbotso LGA Kano.</span>
               </div>
             </div>
           </div>
@@ -81,19 +81,19 @@ const Footer = () => {
                 <Clock className="h-4 w-4 text-primary" />
                 <span className="text-muted-foreground text-sm">Monday - Friday</span>
               </div>
-              <p className="text-foreground">9:00 AM - 8:00 PM</p>
+              <p className="text-foreground">9:00 AM - 11:00 PM</p>
               
               <div className="flex items-center space-x-2 mt-3">
                 <Clock className="h-4 w-4 text-primary" />
                 <span className="text-muted-foreground text-sm">Saturday</span>
               </div>
-              <p className="text-foreground">8:00 AM - 6:00 PM</p>
+              <p className="text-foreground">8:00 AM - 11:00 PM</p>
               
               <div className="flex items-center space-x-2 mt-3">
                 <Clock className="h-4 w-4 text-primary" />
                 <span className="text-muted-foreground text-sm">Sunday</span>
               </div>
-              <p className="text-foreground">10:00 AM - 5:00 PM</p>
+              <p className="text-foreground">10:00 AM - 10:00 PM</p>
             </div>
           </div>
         </div>

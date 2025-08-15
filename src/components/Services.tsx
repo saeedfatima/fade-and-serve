@@ -33,7 +33,7 @@ const services = [
   {
     id: 4,
     name: 'Royal Package (VIP)',
-    description: 'Premium grooming with VIP infrastructure services — brand new towel, brush, comb, washing brush, complimentary drink or hot tea (optional), relaxing foot wash, and rejuvenating face mask (optional).',
+    description: 'Premium grooming with VIP infrastructure services  brand new towel, brush, comb, washing brush, complimentary drink or hot tea (optional), relaxing foot wash, and rejuvenating face mask (optional).',
     price: '₦10,000',
     duration: '90 min',
     icon: Crown,

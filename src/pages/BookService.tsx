@@ -16,14 +16,15 @@ import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-const services = [
-  { id: 1, name: "Classic Haircut", price: 3000, duration: "45 min" },
-  { id: 2, name: "Beard Trim", price: 2000, duration: "30 min" },
-  { id: 3, name: "Premium Cut & Style", price: 5000, duration: "60 min" },
-  { id: 4, name: "Hot Towel Shave", price: 4000, duration: "45 min" },
-  { id: 5, name: "Father & Son Cut", price: 6000, duration: "90 min" },
-  { id: 6, name: "The Full Service", price: 8000, duration: "120 min" },
-];
+interface Service {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  duration_minutes: number;
+  duration_display: string;
+  is_active: boolean;
+}
 
 const timeSlots = [
   "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
@@ -37,6 +38,8 @@ const BookService = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   
+  const [services, setServices] = useState<Service[]>([]);
+  const [loadingServices, setLoadingServices] = useState(true);
   const [selectedService, setSelectedService] = useState(
     searchParams.get('service') || ""
   );
@@ -75,24 +78,29 @@ const BookService = () => {
       return;
     }
 
+    if (!selectedServiceData) {
+      toast({
+        title: "Invalid Service",
+        description: "Please select a valid service.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
     
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .insert({
-          user_id: user.id,
-          service_name: selectedService,
-          service_price: selectedServiceData?.price || 0,
+      const response = await apiClient.createBooking({
+        service_id: selectedServiceData.id,
           appointment_date: format(selectedDate, 'yyyy-MM-dd'),
           appointment_time: selectedTime,
-          notes: notes || null,
+        notes: notes || undefined,
         });
 
-      if (error) {
+      if (response.error) {
         toast({
           title: "Booking Failed",
-          description: error.message,
+          description: response.error,
           variant: "destructive",
         });
         return;
@@ -168,11 +176,11 @@ const BookService = () => {
                       <div className="flex items-center gap-4 text-sm">
                         <div className="flex items-center gap-1">
                           <Banknote className="h-4 w-4 text-primary" />
-                          <span className="font-semibold">₦{selectedServiceData.price.toLocaleString()}</span>
+                          <span className="font-semibold">₦{parseFloat(selectedServiceData.price).toLocaleString()}</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4 text-primary" />
-                          <span>{selectedServiceData.duration}</span>
+                          <span>{selectedServiceData.duration_display}</span>
                         </div>
                       </div>
                     </div>

@@ -20,11 +20,12 @@ interface Booking {
   status: string;
   notes?: string;
   created_at: string;
-  profiles: {
+  user: {
+    id: number;
     first_name: string;
     last_name: string;
     phone?: string;
-  } | null;
+  };
 }
 
 const StaffDashboard = () => {
@@ -250,9 +251,9 @@ const StaffDashboard = () => {
                         </Badge>
                       </div>
                       <div className="space-y-1 text-sm text-muted-foreground">
-                        <p><strong>Customer:</strong> {booking.profiles?.first_name} {booking.profiles?.last_name}</p>
-                        {booking.profiles?.phone && (
-                          <p><strong>Phone:</strong> {booking.profiles.phone}</p>
+                        <p><strong>Customer:</strong> {booking.user?.first_name} {booking.user?.last_name}</p>
+                        {booking.user?.phone && (
+                          <p><strong>Phone:</strong> {booking.user.phone}</p>
                         )}
                         <div className="flex items-center gap-4">
                           <span className="flex items-center gap-1">
@@ -271,7 +272,7 @@ const StaffDashboard = () => {
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
-                        <p className="text-lg font-semibold">${booking.service_price}</p>
+                        <p className="text-lg font-semibold">₦{booking.service_price}</p>
                       </div>
                       <Select
                         value={booking.status}

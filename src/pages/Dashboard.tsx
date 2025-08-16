@@ -22,16 +22,10 @@ interface Booking {
   created_at: string;
 }
 
-interface Profile {
-  first_name: string;
-  last_name: string;
-  phone?: string;
-}
 
 const Dashboard = () => {
   const { user, userRole, signOut, loading } = useAuth();
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [profile, setProfile] = useState<Profile | null>(null);
   const [loadingBookings, setLoadingBookings] = useState(true);
 
   // Redirect if not authenticated
@@ -42,47 +36,23 @@ const Dashboard = () => {
   useEffect(() => {
     if (user) {
       fetchUserBookings();
-      fetchUserProfile();
     }
   }, [user]);
 
   const fetchUserBookings = async () => {
     try {
-      const { data, error } = await supabase
-        .from('bookings')
-        .select('*')
-        .eq('user_id', user?.id)
-        .order('appointment_date', { ascending: true });
+      const response = await apiClient.getBookings();
 
-      if (error) {
-        console.error('Error fetching bookings:', error);
+      if (response.error) {
+        console.error('Error fetching bookings:', response.error);
         return;
       }
 
-      setBookings(data || []);
+      setBookings(response.data || []);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     } finally {
       setLoadingBookings(false);
-    }
-  };
-
-  const fetchUserProfile = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('first_name, last_name, phone')
-        .eq('user_id', user?.id)
-        .single();
-
-      if (error) {
-        console.error('Error fetching profile:', error);
-        return;
-      }
-
-      setProfile(data);
-    } catch (error) {
-      console.error('Error fetching profile:', error);
     }
   };
 
@@ -103,13 +73,10 @@ const Dashboard = () => {
 
   const handleCancelBooking = async (bookingId: string) => {
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .update({ status: 'cancelled' })
-        .eq('id', bookingId);
+      const response = await apiClient.updateBooking(parseInt(bookingId), { status: 'cancelled' });
 
-      if (error) {
-        console.error('Error cancelling booking:', error);
+      if (response.error) {
+        console.error('Error cancelling booking:', response.error);
         return;
       }
 
@@ -136,7 +103,7 @@ const Dashboard = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold">Welcome back, {profile?.first_name || 'User'}!</h1>
+            <h1 className="text-3xl font-bold">Welcome back, {user?.first_name || 'User'}!</h1>
             <p className="text-muted-foreground">Manage your appointments and profile</p>
           </div>
           <UserMenu />

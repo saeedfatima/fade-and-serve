@@ -1,0 +1,68 @@
+[
+  {
+    "model": "services.service",
+    "pk": 1,
+    "fields": {
+      "name": "Classic Haircut",
+      "description": "Traditional men's haircut with precision and style",
+      "price": "3000.00",
+      "duration_minutes": 45,
+      "is_active": true
+    }
+  },
+  {
+    "model": "services.service",
+    "pk": 2,
+    "fields": {
+      "name": "Beard Trim",
+      "description": "Professional beard shaping and trimming",
+      "price": "2000.00",
+      "duration_minutes": 30,
+      "is_active": true
+    }
+  },
+  {
+    "model": "services.service",
+    "pk": 3,
+    "fields": {
+      "name": "Premium Cut & Style",
+      "description": "Complete haircut with wash, cut, and styling",
+      "price": "5000.00",
+      "duration_minutes": 60,
+      "is_active": true
+    }
+  },
+  {
+    "model": "services.service",
+    "pk": 4,
+    "fields": {
+      "name": "Hot Towel Shave",
+      "description": "Luxurious traditional straight razor shave",
+      "price": "4000.00",
+      "duration_minutes": 45,
+      "is_active": true
+    }
+  },
+  {
+    "model": "services.service",
+    "pk": 5,
+    "fields": {
+      "name": "Father & Son Cut",
+      "description": "Special package for father and son haircuts",
+      "price": "6000.00",
+      "duration_minutes": 90,
+      "is_active": true
+    }
+  },
+  {
+    "model": "services.service",
+    "pk": 6,
+    "fields": {
+      "name": "The Full Service",
+      "description": "Complete grooming experience with cut, beard, and styling",
+      "price": "8000.00",
+      "duration_minutes": 120,
+      "is_active": true
+    }
+  }
+]

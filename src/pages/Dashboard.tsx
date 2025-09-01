@@ -10,6 +10,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProfileManager from '@/components/ProfileManager';
 import UserMenu from '@/components/UserMenu';
+import { apiClient } from '@/lib/api';
 
 interface Booking {
   id: string;
@@ -48,7 +49,7 @@ const Dashboard = () => {
         return;
       }
 
-      setBookings(response.data || []);
+      setBookings((response.data as Booking[]) ?? []);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     } finally {
@@ -103,7 +104,7 @@ const Dashboard = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold">Welcome back, {user?.first_name || 'User'}!</h1>
+            <h1 className="text-3xl font-bold">Welcome back, {user?.email || 'User'}!</h1>
             <p className="text-muted-foreground">Manage your appointments and profile</p>
           </div>
           <UserMenu />

@@ -11,10 +11,13 @@ import { useToast } from '@/hooks/use-toast';
 const Auth = () => {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [signupData, setSignupData] = useState({ 
-    email: '', 
-    password: '', 
-    firstName: '', 
-    lastName: '' 
+    username: '',
+    email: '',
+    password: '',
+    first_name: '',
+    last_name: '',
+    phone: '',
+    password_confirm: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [resetEmail, setResetEmail] = useState('');

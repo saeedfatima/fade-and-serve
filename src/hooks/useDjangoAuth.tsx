@@ -55,8 +55,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const response = await apiClient.getProfile();
       if (response.data) {
-        setUser(response.data);
-        setUserRole(response.data.role);
+        setUser(response.data as any);
+        setUserRole((response.data as any).role);
       } else {
         // Token might be invalid, clear it
         localStorage.removeItem('access_token');
@@ -77,11 +77,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const response = await apiClient.register(userData);
     
     if (response.data) {
-      const { user: newUser, access, refresh } = response.data;
-      setUser(newUser);
-      setUserRole(newUser.role);
-      apiClient.setToken(access);
-      localStorage.setItem('refresh_token', refresh);
+      const { user: newUser, access, refresh } = response.data as any;
+      setUser(newUser as any);
+      setUserRole((newUser as any).role);
+      apiClient.setToken(access as any);
+      localStorage.setItem('refresh_token', refresh as any);
       return { error: null };
     }
     
@@ -92,11 +92,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const response = await apiClient.login({ email, password });
     
     if (response.data) {
-      const { user: loggedInUser, access, refresh } = response.data;
-      setUser(loggedInUser);
-      setUserRole(loggedInUser.role);
-      apiClient.setToken(access);
-      localStorage.setItem('refresh_token', refresh);
+      const { user: loggedInUser, access, refresh } = response.data as any;
+      setUser(loggedInUser as any);
+      setUserRole((loggedInUser as any).role);
+      apiClient.setToken(access as any);
+      localStorage.setItem('refresh_token', refresh as any);
       return { error: null };
     }
     
@@ -115,7 +115,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const response = await apiClient.updateProfile(profileData);
     
     if (response.data) {
-      setUser(response.data);
+      setUser(response.data as any);
       return { error: null };
     }
     

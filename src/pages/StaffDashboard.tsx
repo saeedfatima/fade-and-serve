@@ -20,12 +20,6 @@ interface Booking {
   status: string;
   notes?: string;
   created_at: string;
-  user: {
-    id: number;
-    first_name: string;
-    last_name: string;
-    phone?: string;
-  };
 }
 
 const StaffDashboard = () => {
@@ -49,14 +43,7 @@ const StaffDashboard = () => {
     try {
       const { data, error } = await supabase
         .from('bookings')
-        .select(`
-          *,
-          profiles!user_id (
-            first_name,
-            last_name,
-            phone
-          )
-        `)
+        .select('*')
         .order('appointment_date', { ascending: true });
 
       if (error) {
@@ -251,10 +238,7 @@ const StaffDashboard = () => {
                         </Badge>
                       </div>
                       <div className="space-y-1 text-sm text-muted-foreground">
-                        <p><strong>Customer:</strong> {booking.user?.first_name} {booking.user?.last_name}</p>
-                        {booking.user?.phone && (
-                          <p><strong>Phone:</strong> {booking.user.phone}</p>
-                        )}
+                        <p><strong>Customer:</strong> —</p>
                         <div className="flex items-center gap-4">
                           <span className="flex items-center gap-1">
                             <Calendar className="w-4 h-4" />

@@ -15,14 +15,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { apiClient } from '@/lib/api';
 
 interface Service {
   id: number;
   name: string;
   description: string;
-  price: string;
-  duration_minutes: number;
-  duration_display: string;
+  price: number;
+  duration: number; // minutes
   is_active: boolean;
 }
 
@@ -157,7 +157,7 @@ const BookService = () => {
                             </div>
                             <div className="flex items-center gap-1">
                               <Clock className="h-3 w-3" />
-                              <span className="text-sm">{service.duration}</span>
+                              <span className="text-sm">{service.duration} mins</span>
                             </div>
                           </div>
                         </div>
@@ -176,11 +176,11 @@ const BookService = () => {
                       <div className="flex items-center gap-4 text-sm">
                         <div className="flex items-center gap-1">
                           <Banknote className="h-4 w-4 text-primary" />
-                          <span className="font-semibold">₦{parseFloat(selectedServiceData.price).toLocaleString()}</span>
+                          <span className="font-semibold">₦{selectedServiceData.price.toLocaleString()}</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4 text-primary" />
-                          <span>{selectedServiceData.duration_display}</span>
+                          <span>{selectedServiceData.duration} mins</span>
                         </div>
                       </div>
                     </div>

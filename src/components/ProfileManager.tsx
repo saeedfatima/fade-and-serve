@@ -42,27 +42,54 @@ const ProfileManager = () => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('first_name, last_name, phone, avatar_url, gender')
+        .select('full_name, phone')
         .eq('user_id', user?.id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching profile:', error);
         return;
       }
 
-      setProfile({
-        first_name: data.first_name || '',
-        last_name: data.last_name || '',
-        phone: data.phone || '',
-        avatar_url: data.avatar_url || '',
-        gender: data.gender || 'male'
-      });
+      const fullName = data?.full_name || '';
+      const parts = fullName.trim().split(' ');
+      const first = parts[0] || '';
+      const last = parts.slice(1).join(' ') || '';
+
+      setProfile(prev => ({
+        ...prev,
+        first_name: first,
+        last_name: last,
+        phone: data?.phone || '',
+        avatar_url: prev.avatar_url,
+        gender: prev.gender,
+      }));
     } catch (error) {
       console.error('Error fetching profile:', error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const updateProfile = async (profileData: ProfileData) => {
+    const full_name = `${profileData.first_name} ${profileData.last_name}`.trim();
+
+    // Try to update existing profile first
+    const { error: updateError } = await supabase
+      .from('profiles')
+      .update({ full_name, phone: profileData.phone })
+      .eq('user_id', user?.id as string);
+
+    if (updateError) {
+      // Attempt insert if no profile exists
+      const { error: insertError } = await supabase
+        .from('profiles')
+        .insert({ user_id: user?.id, full_name, phone: profileData.phone });
+
+      return { error: insertError };
+    }
+
+    return { error: null };
   };
 
   const handleSave = async () => {
@@ -116,7 +143,7 @@ const ProfileManager = () => {
           <Avatar className="w-24 h-24">
             <AvatarImage src={profile.avatar_url} alt="Profile avatar" />
             <AvatarFallback className="text-lg bg-primary text-primary-foreground">
-              {profile.first_name.charAt(0)}{profile.last_name.charAt(0)}
+              {(profile.first_name?.charAt(0) || '')}{(profile.last_name?.charAt(0) || '')}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col items-center space-y-2">

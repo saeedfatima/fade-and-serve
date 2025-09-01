@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,10 +15,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { apiClient } from '@/lib/api';
-
 interface Service {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: number;
@@ -47,6 +45,31 @@ const BookService = () => {
   const [selectedTime, setSelectedTime] = useState("");
   const [notes, setNotes] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch services on component mount
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('services')
+          .select('*')
+          .eq('is_active', true);
+
+        if (error) {
+          console.error('Error fetching services:', error);
+          return;
+        }
+
+        setServices(data || []);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      } finally {
+        setLoadingServices(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   if (!user) {
     return (
@@ -90,17 +113,21 @@ const BookService = () => {
     setIsLoading(true);
     
     try {
-      const response = await apiClient.createBooking({
-        service_id: selectedServiceData.id,
+      const { error } = await supabase
+        .from('bookings')
+        .insert({
+          user_id: user.id,
+          service_id: selectedServiceData.id,
           appointment_date: format(selectedDate, 'yyyy-MM-dd'),
           appointment_time: selectedTime,
-        notes: notes || undefined,
+          notes: notes || null,
         });
 
-      if (response.error) {
+      if (error) {
+        console.error('Booking error:', error);
         toast({
           title: "Booking Failed",
-          description: response.error,
+          description: "Failed to create booking. Please try again.",
           variant: "destructive",
         });
         return;
@@ -113,6 +140,7 @@ const BookService = () => {
       
       navigate('/dashboard');
     } catch (error) {
+      console.error('Unexpected error:', error);
       toast({
         title: "Error",
         description: "An unexpected error occurred.",

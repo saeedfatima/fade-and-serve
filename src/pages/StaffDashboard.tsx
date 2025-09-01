@@ -43,7 +43,10 @@ const StaffDashboard = () => {
     try {
       const { data, error } = await supabase
         .from('bookings')
-        .select('*')
+        .select(`
+          *,
+          services(name, price)
+        `)
         .order('appointment_date', { ascending: true });
 
       if (error) {
@@ -56,7 +59,19 @@ const StaffDashboard = () => {
         return;
       }
 
-      setAllBookings((data as any) || []);
+      // Transform data to match expected format
+      const transformedBookings = data?.map(booking => ({
+        id: booking.id,
+        service_name: booking.services?.name || 'Unknown Service',
+        service_price: booking.services?.price || 0,
+        appointment_date: booking.appointment_date,
+        appointment_time: booking.appointment_time,
+        status: booking.status,
+        notes: booking.notes,
+        created_at: booking.created_at,
+      })) || [];
+
+      setAllBookings(transformedBookings);
     } catch (error) {
       console.error('Error fetching bookings:', error);
       toast({

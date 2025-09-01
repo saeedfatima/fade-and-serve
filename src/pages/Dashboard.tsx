@@ -10,7 +10,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProfileManager from '@/components/ProfileManager';
 import UserMenu from '@/components/UserMenu';
-import { apiClient } from '@/lib/api';
+
 
 interface Booking {
   id: string;
@@ -42,14 +42,33 @@ const Dashboard = () => {
 
   const fetchUserBookings = async () => {
     try {
-      const response = await apiClient.getBookings();
+      const { data, error } = await supabase
+        .from('bookings')
+        .select(`
+          *,
+          services(name, price)
+        `)
+        .eq('user_id', user?.id)
+        .order('appointment_date', { ascending: false });
 
-      if (response.error) {
-        console.error('Error fetching bookings:', response.error);
+      if (error) {
+        console.error('Error fetching bookings:', error);
         return;
       }
 
-      setBookings((response.data as Booking[]) ?? []);
+      // Transform data to match expected format
+      const transformedBookings = data?.map(booking => ({
+        id: booking.id,
+        service_name: booking.services?.name || 'Unknown Service',
+        service_price: booking.services?.price || 0,
+        appointment_date: booking.appointment_date,
+        appointment_time: booking.appointment_time,
+        status: booking.status,
+        notes: booking.notes,
+        created_at: booking.created_at,
+      })) || [];
+
+      setBookings(transformedBookings);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     } finally {
@@ -74,10 +93,13 @@ const Dashboard = () => {
 
   const handleCancelBooking = async (bookingId: string) => {
     try {
-      const response = await apiClient.updateBooking(parseInt(bookingId), { status: 'cancelled' });
+      const { error } = await supabase
+        .from('bookings')
+        .update({ status: 'cancelled' })
+        .eq('id', bookingId);
 
-      if (response.error) {
-        console.error('Error cancelling booking:', response.error);
+      if (error) {
+        console.error('Error cancelling booking:', error);
         return;
       }
 

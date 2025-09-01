@@ -7,105 +7,736 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
-      bookings: {
+      addresses: {
         Row: {
-          appointment_date: string
-          appointment_time: string
+          address_line_1: string
+          address_line_2: string | null
+          city: string
+          country: string
+          created_at: string
+          full_name: string
+          id: string
+          is_default: boolean | null
+          phone: string
+          postal_code: string
+          state: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address_line_1: string
+          address_line_2?: string | null
+          city: string
+          country?: string
+          created_at?: string
+          full_name: string
+          id?: string
+          is_default?: boolean | null
+          phone: string
+          postal_code: string
+          state: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address_line_1?: string
+          address_line_2?: string | null
+          city?: string
+          country?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          is_default?: boolean | null
+          phone?: string
+          postal_code?: string
+          state?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      cart_items: {
+        Row: {
           created_at: string
           id: string
+          prescription_id: string | null
+          product_id: string
+          quantity: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          prescription_id?: string | null
+          product_id: string
+          quantity?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          prescription_id?: string | null
+          product_id?: string
+          quantity?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number | null
+          id: string
+          image_url: string | null
+          is_prescription_required: boolean | null
+          name: string
+          parent_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_prescription_required?: boolean | null
+          name: string
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_prescription_required?: boolean | null
+          name?: string
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      credit_topups: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          payment_id: string | null
+          payment_status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          payment_id?: string | null
+          payment_status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          payment_id?: string | null
+          payment_status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      equipment: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_available: boolean
+          is_new: boolean
+          name: string
+          product_id: string | null
+          surcharge_amount: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_available?: boolean
+          is_new?: boolean
+          name: string
+          product_id?: string | null
+          surcharge_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_available?: boolean
+          is_new?: boolean
+          name?: string
+          product_id?: string | null
+          surcharge_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manufacturers: {
+        Row: {
+          address: Json | null
+          certifications: string[] | null
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          description: string | null
+          established_year: number | null
+          id: string
+          logo_url: string | null
+          name: string
+          status: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: Json | null
+          certifications?: string[] | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string | null
+          established_year?: number | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          status?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: Json | null
+          certifications?: string[] | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string | null
+          established_year?: number | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          status?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      order_items: {
+        Row: {
+          created_at: string
+          equipment_id: string | null
+          equipment_surcharge: number | null
+          id: string
+          order_id: string
+          prescription_id: string | null
+          product_id: string
+          quantity: number
+          total_price: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          equipment_id?: string | null
+          equipment_surcharge?: number | null
+          id?: string
+          order_id: string
+          prescription_id?: string | null
+          product_id: string
+          quantity: number
+          total_price: number
+          unit_price: number
+        }
+        Update: {
+          created_at?: string
+          equipment_id?: string | null
+          equipment_surcharge?: number | null
+          id?: string
+          order_id?: string
+          prescription_id?: string | null
+          product_id?: string
+          quantity?: number
+          total_price?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          billing_address: Json | null
+          created_at: string
+          delivery_date: string | null
+          discount_amount: number | null
+          home_service_requested: boolean
+          id: string
+          is_vip: boolean
           notes: string | null
-          service_name: string
-          service_price: number
+          order_number: string
+          payment_id: string | null
+          payment_method: string | null
+          payment_status: string
+          pharmacist_id: string | null
+          prescription_verified: boolean | null
+          service_date: string | null
+          service_time_slot: string | null
+          shipping_address: Json
+          shipping_amount: number | null
+          status: string
+          tax_amount: number | null
+          total_amount: number
+          tracking_number: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          billing_address?: Json | null
+          created_at?: string
+          delivery_date?: string | null
+          discount_amount?: number | null
+          home_service_requested?: boolean
+          id?: string
+          is_vip?: boolean
+          notes?: string | null
+          order_number: string
+          payment_id?: string | null
+          payment_method?: string | null
+          payment_status?: string
+          pharmacist_id?: string | null
+          prescription_verified?: boolean | null
+          service_date?: string | null
+          service_time_slot?: string | null
+          shipping_address: Json
+          shipping_amount?: number | null
+          status?: string
+          tax_amount?: number | null
+          total_amount: number
+          tracking_number?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          billing_address?: Json | null
+          created_at?: string
+          delivery_date?: string | null
+          discount_amount?: number | null
+          home_service_requested?: boolean
+          id?: string
+          is_vip?: boolean
+          notes?: string | null
+          order_number?: string
+          payment_id?: string | null
+          payment_method?: string | null
+          payment_status?: string
+          pharmacist_id?: string | null
+          prescription_verified?: boolean | null
+          service_date?: string | null
+          service_time_slot?: string | null
+          shipping_address?: Json
+          shipping_amount?: number | null
+          status?: string
+          tax_amount?: number | null
+          total_amount?: number
+          tracking_number?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      prescriptions: {
+        Row: {
+          clinic_name: string | null
+          created_at: string
+          doctor_license: string | null
+          doctor_name: string
+          expiry_date: string | null
+          id: string
+          image_url: string
+          pharmacist_id: string | null
           status: string
           updated_at: string
           user_id: string
+          verification_notes: string | null
         }
         Insert: {
-          appointment_date: string
-          appointment_time: string
+          clinic_name?: string | null
           created_at?: string
+          doctor_license?: string | null
+          doctor_name: string
+          expiry_date?: string | null
           id?: string
-          notes?: string | null
-          service_name: string
-          service_price: number
+          image_url: string
+          pharmacist_id?: string | null
           status?: string
           updated_at?: string
           user_id: string
+          verification_notes?: string | null
         }
         Update: {
-          appointment_date?: string
-          appointment_time?: string
+          clinic_name?: string | null
           created_at?: string
+          doctor_license?: string | null
+          doctor_name?: string
+          expiry_date?: string | null
           id?: string
-          notes?: string | null
-          service_name?: string
-          service_price?: number
+          image_url?: string
+          pharmacist_id?: string | null
           status?: string
           updated_at?: string
           user_id?: string
+          verification_notes?: string | null
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          active_ingredients: string[] | null
+          barcode: string | null
+          batch_number: string | null
+          category_id: string
+          contraindications: string[] | null
+          created_at: string
+          description: string | null
+          dimensions: Json | null
+          discount_price: number | null
+          dosage_form: string | null
+          expiry_date: string | null
+          fda_approved: boolean | null
+          generic_name: string | null
+          id: string
+          images: string[] | null
+          inactive_ingredients: string[] | null
+          manufacturer_id: string
+          min_stock_level: number | null
+          name: string
+          pack_size: number | null
+          prescription_required: boolean | null
+          price: number
+          side_effects: string[] | null
+          sku: string
+          status: string
+          stock_quantity: number | null
+          storage_instructions: string | null
+          strength: string | null
+          updated_at: string
+          weight: number | null
+        }
+        Insert: {
+          active_ingredients?: string[] | null
+          barcode?: string | null
+          batch_number?: string | null
+          category_id: string
+          contraindications?: string[] | null
+          created_at?: string
+          description?: string | null
+          dimensions?: Json | null
+          discount_price?: number | null
+          dosage_form?: string | null
+          expiry_date?: string | null
+          fda_approved?: boolean | null
+          generic_name?: string | null
+          id?: string
+          images?: string[] | null
+          inactive_ingredients?: string[] | null
+          manufacturer_id: string
+          min_stock_level?: number | null
+          name: string
+          pack_size?: number | null
+          prescription_required?: boolean | null
+          price: number
+          side_effects?: string[] | null
+          sku: string
+          status?: string
+          stock_quantity?: number | null
+          storage_instructions?: string | null
+          strength?: string | null
+          updated_at?: string
+          weight?: number | null
+        }
+        Update: {
+          active_ingredients?: string[] | null
+          barcode?: string | null
+          batch_number?: string | null
+          category_id?: string
+          contraindications?: string[] | null
+          created_at?: string
+          description?: string | null
+          dimensions?: Json | null
+          discount_price?: number | null
+          dosage_form?: string | null
+          expiry_date?: string | null
+          fda_approved?: boolean | null
+          generic_name?: string | null
+          id?: string
+          images?: string[] | null
+          inactive_ingredients?: string[] | null
+          manufacturer_id?: string
+          min_stock_level?: number | null
+          name?: string
+          pack_size?: number | null
+          prescription_required?: boolean | null
+          price?: number
+          side_effects?: string[] | null
+          sku?: string
+          status?: string
+          stock_quantity?: number | null
+          storage_instructions?: string | null
+          strength?: string | null
+          updated_at?: string
+          weight?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_manufacturer_id_fkey"
+            columns: ["manufacturer_id"]
+            isOneToOne: false
+            referencedRelation: "manufacturers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
-          avatar_url: string | null
+          address: Json | null
+          allergies: string[] | null
           created_at: string
-          first_name: string | null
-          gender: string | null
+          date_of_birth: string | null
+          emergency_contact: Json | null
+          full_name: string | null
           id: string
-          last_name: string | null
+          insurance_info: Json | null
+          medical_conditions: string[] | null
           phone: string | null
+          prescription_history: Json[] | null
+          updated_at: string
+          user_id: string
+          user_type: string
+        }
+        Insert: {
+          address?: Json | null
+          allergies?: string[] | null
+          created_at?: string
+          date_of_birth?: string | null
+          emergency_contact?: Json | null
+          full_name?: string | null
+          id?: string
+          insurance_info?: Json | null
+          medical_conditions?: string[] | null
+          phone?: string | null
+          prescription_history?: Json[] | null
+          updated_at?: string
+          user_id: string
+          user_type?: string
+        }
+        Update: {
+          address?: Json | null
+          allergies?: string[] | null
+          created_at?: string
+          date_of_birth?: string | null
+          emergency_contact?: Json | null
+          full_name?: string | null
+          id?: string
+          insurance_info?: Json | null
+          medical_conditions?: string[] | null
+          phone?: string | null
+          prescription_history?: Json[] | null
+          updated_at?: string
+          user_id?: string
+          user_type?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          helpful_count: number | null
+          id: string
+          order_id: string | null
+          product_id: string
+          rating: number
+          title: string | null
+          updated_at: string
+          user_id: string
+          verified_purchase: boolean | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          order_id?: string | null
+          product_id: string
+          rating: number
+          title?: string | null
+          updated_at?: string
+          user_id: string
+          verified_purchase?: boolean | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          order_id?: string | null
+          product_id?: string
+          rating?: number
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+          verified_purchase?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_availability: {
+        Row: {
+          available_date: string
+          booked_count: number
+          capacity: number
+          created_at: string
+          end_time: string
+          id: string
+          is_active: boolean
+          service_name: string
+          start_time: string
+          updated_at: string
+        }
+        Insert: {
+          available_date: string
+          booked_count?: number
+          capacity?: number
+          created_at?: string
+          end_time: string
+          id?: string
+          is_active?: boolean
+          service_name: string
+          start_time: string
+          updated_at?: string
+        }
+        Update: {
+          available_date?: string
+          booked_count?: number
+          capacity?: number
+          created_at?: string
+          end_time?: string
+          id?: string
+          is_active?: boolean
+          service_name?: string
+          start_time?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_credits: {
+        Row: {
+          balance: number
+          created_at: string
+          id: string
           updated_at: string
           user_id: string
         }
         Insert: {
-          avatar_url?: string | null
+          balance?: number
           created_at?: string
-          first_name?: string | null
-          gender?: string | null
           id?: string
-          last_name?: string | null
-          phone?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
-          avatar_url?: string | null
+          balance?: number
           created_at?: string
-          first_name?: string | null
-          gender?: string | null
           id?: string
-          last_name?: string | null
-          phone?: string | null
           updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      user_roles: {
-        Row: {
-          created_at: string
-          id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
         }
         Relationships: []
@@ -115,16 +746,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      has_role: {
-        Args: {
-          _user_id: string
-          _role: Database["public"]["Enums"]["app_role"]
-        }
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
-      app_role: "user" | "staff" | "admin"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -251,8 +876,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      app_role: ["user", "staff", "admin"],
-    },
+    Enums: {},
   },
 } as const

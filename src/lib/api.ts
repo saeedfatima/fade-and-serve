@@ -112,10 +112,91 @@ class ApiClient {
     });
   }
 
-  async updateBooking(bookingId: number, updateData: { status?: string; notes?: string }) {
+  async updateBooking(bookingId: number, updateData: { 
+    status?: string; 
+    notes?: string; 
+    is_vip?: boolean;
+    is_home_service?: boolean;
+    use_new_equipment?: boolean;
+  }) {
     return this.request(`/bookings/${bookingId}/`, {
       method: 'PATCH',
       body: JSON.stringify(updateData),
+    });
+  }
+
+  // Cart endpoints
+  async getCart() {
+    return this.request('/cart/');
+  }
+
+  async addToCart(cartData: {
+    service_id: number;
+    quantity?: number;
+    use_new_equipment?: boolean;
+    equipment_surcharge?: number;
+  }) {
+    return this.request('/cart/add/', {
+      method: 'POST',
+      body: JSON.stringify(cartData),
+    });
+  }
+
+  async removeFromCart(itemId: number) {
+    return this.request(`/cart/remove/${itemId}/`, {
+      method: 'DELETE',
+    });
+  }
+
+  async clearCart() {
+    return this.request('/cart/clear/', {
+      method: 'POST',
+    });
+  }
+
+  // Service availability endpoints
+  async getServiceAvailability(params?: {
+    service_id?: number;
+    date?: string;
+    is_home_service?: boolean;
+  }) {
+    const searchParams = new URLSearchParams();
+    if (params?.service_id) searchParams.append('service_id', params.service_id.toString());
+    if (params?.date) searchParams.append('date', params.date);
+    if (params?.is_home_service !== undefined) searchParams.append('is_home_service', params.is_home_service.toString());
+    
+    const query = searchParams.toString() ? `?${searchParams.toString()}` : '';
+    return this.request(`/service-availability/${query}`);
+  }
+
+  async createServiceAvailability(availabilityData: {
+    service_id: number;
+    date: string;
+    start_time: string;
+    end_time: string;
+    capacity?: number;
+    is_home_service?: boolean;
+  }) {
+    return this.request('/service-availability/create/', {
+      method: 'POST',
+      body: JSON.stringify(availabilityData),
+    });
+  }
+
+  // Equipment endpoints
+  async getEquipment() {
+    return this.request('/equipment/');
+  }
+
+  // Credit top-up endpoints
+  async getCreditTopUps() {
+    return this.request('/credit-topups/');
+  }
+
+  async createCreditTopUp(amount: number) {
+    return this.request('/credit-topups/', {
+      method: 'POST',
+      body: JSON.stringify({ amount }),
     });
   }
 

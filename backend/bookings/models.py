@@ -16,6 +16,10 @@ class Booking(models.Model):
     appointment_time = models.TimeField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     notes = models.TextField(blank=True, null=True)
+    is_vip = models.BooleanField(default=False)
+    is_home_service = models.BooleanField(default=False)
+    use_new_equipment = models.BooleanField(default=False)
+    equipment_surcharge = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

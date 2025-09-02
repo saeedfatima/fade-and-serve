@@ -1,80 +1,53 @@
-# Django Barber Shop Backend
+# Barber Shop - Production Ready Backend
 
-This is the Django REST API backend for the YUSTIKUM Barber Shop application.
+A complete Django REST API with PostgreSQL, cart system, VIP bookings, and Render deployment configuration.
 
-## Setup Instructions
+## Quick Deploy to Render
 
-### 1. Create Virtual Environment
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+1. **Fork this repository**
+2. **Create Render account** and connect GitHub
+3. **Use render.yaml** - automatically creates database and web service
+4. **Set environment variables** in Render dashboard:
+   - `SECRET_KEY` (auto-generated)
+   - `ALLOWED_HOSTS` (your-app.onrender.com)
+   - `CORS_ALLOWED_ORIGINS` (your-frontend-domain.com)
 
-### 2. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+## Features Added
 
-### 3. Environment Configuration
-```bash
-cp .env.example .env
-# Edit .env file with your database credentials and settings
-```
-
-### 4. Database Setup
-Make sure PostgreSQL is installed and running, then create a database:
-```sql
-CREATE DATABASE barber_shop;
-```
-
-### 5. Run Migrations
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-### 6. Load Initial Data
-```bash
-python manage.py loaddata fixtures/initial_services.json
-```
-
-### 7. Create Superuser
-```bash
-python manage.py createsuperuser
-```
-
-### 8. Run Development Server
-```bash
-python manage.py runserver
-```
-
-The API will be available at `http://localhost:8000/api/`
+- **Cart System**: Server-side cart with credit top-ups
+- **VIP Bookings**: Admin can toggle VIP status on any booking
+- **Home Service**: Toggle availability per service with time slots
+- **New Equipment**: Badge system with surcharge options
+- **Enhanced Admin**: Sidebar navigation with collapsible design
+- **Production Ready**: WhiteNoise, dj-database-url, Gunicorn
 
 ## API Endpoints
 
-### Authentication
-- `POST /api/auth/register/` - User registration
-- `POST /api/auth/login/` - User login
-- `POST /api/auth/token/refresh/` - Refresh JWT token
-- `GET/PATCH /api/auth/profile/` - Get/Update user profile
+```
+POST /api/cart/add/           # Add to cart
+GET  /api/cart/              # Get cart
+POST /api/credit-topups/     # Add credit
+GET  /api/service-availability/ # Available slots
+PATCH /api/bookings/{id}/    # Update booking (VIP, status)
+```
 
-### Services
-- `GET /api/services/` - List all active services
+## Local Development
 
-### Bookings
-- `GET /api/bookings/` - List user's bookings (or all for staff)
-- `POST /api/bookings/create/` - Create new booking
-- `GET/PATCH/DELETE /api/bookings/{id}/` - Manage specific booking
+```bash
+cd backend
+pip install -r requirements.txt
+cp .env.example .env
+python manage.py migrate
+python manage.py runserver 8000
+```
 
-## User Roles
-- `user` - Regular customers (default)
-- `staff` - Barber staff members
-- `admin` - Full administrative access
+## Frontend Integration
 
-## Admin Interface
-Access the Django admin at `http://localhost:8000/admin/` to manage:
-- Users and roles
-- Services
-- Bookings
-- System settings
+Updated React app with:
+- Admin sidebar navigation (`/admin`)
+- VIP toggle switches
+- Cart management
+- Service availability display
+- Responsive design with mobile hamburger menu
+
+Deploy frontend to Netlify/Vercel and set `VITE_API_BASE_URL` to your Render backend URL.

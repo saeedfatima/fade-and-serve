@@ -5,14 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar, Clock, Users, DollarSign, LogOut, Settings } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useDjangoAuth';
+import { apiClient } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 interface Booking {
-  id: string;
+  id: number;
   service_name: string;
   service_price: number;
   appointment_date: string;
@@ -41,16 +41,10 @@ const StaffDashboard = () => {
 
   const fetchAllBookings = async () => {
     try {
-      const { data, error } = await supabase
-        .from('bookings')
-        .select(`
-          *,
-          services(name, price)
-        `)
-        .order('appointment_date', { ascending: true });
+      const response = await apiClient.getBookings();
 
-      if (error) {
-        console.error('Error fetching bookings:', error);
+      if (response.error) {
+        console.error('Error fetching bookings:', response.error);
         toast({
           title: "Error",
           description: "Failed to load bookings",
@@ -59,19 +53,7 @@ const StaffDashboard = () => {
         return;
       }
 
-      // Transform data to match expected format
-      const transformedBookings = data?.map(booking => ({
-        id: booking.id,
-        service_name: booking.services?.name || 'Unknown Service',
-        service_price: booking.services?.price || 0,
-        appointment_date: booking.appointment_date,
-        appointment_time: booking.appointment_time,
-        status: booking.status,
-        notes: booking.notes,
-        created_at: booking.created_at,
-      })) || [];
-
-      setAllBookings(transformedBookings);
+      setAllBookings((response.data as Booking[]) || []);
     } catch (error) {
       console.error('Error fetching bookings:', error);
       toast({
@@ -84,15 +66,12 @@ const StaffDashboard = () => {
     }
   };
 
-  const updateBookingStatus = async (bookingId: string, newStatus: string) => {
+  const updateBookingStatus = async (bookingId: number, newStatus: string) => {
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .update({ status: newStatus })
-        .eq('id', bookingId);
+      const response = await apiClient.updateBooking(bookingId, { status: newStatus });
 
-      if (error) {
-        console.error('Error updating booking:', error);
+      if (response.error) {
+        console.error('Error updating booking:', response.error);
         toast({
           title: "Error",
           description: "Failed to update booking status",

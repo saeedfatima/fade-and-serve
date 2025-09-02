@@ -17,7 +17,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { Settings, User as UserIcon, LogOut } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useDjangoAuth';
 import ProfileManager from '@/components/ProfileManager';
 
 
@@ -25,7 +25,7 @@ const UserMenu = () => {
   const { user, signOut } = useAuth();
   const [open, setOpen] = useState(false);
 
-  const initials = user?.user_metadata?.first_name?.[0] + user?.user_metadata?.last_name?.[0] || user?.email?.[0]?.toUpperCase() || 'U';
+  const initials = user?.first_name?.[0] + user?.last_name?.[0] || user?.email?.[0]?.toUpperCase() || 'U';
 
   return (
     <>
@@ -33,7 +33,7 @@ const UserMenu = () => {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="gap-2">
             <Avatar className="h-8 w-8">
-              <AvatarImage src={user?.user_metadata?.avatar_url ?? undefined} alt="User avatar" />
+              <AvatarImage src={user?.avatar_url ?? undefined} alt="User avatar" />
               <AvatarFallback>{initials}</AvatarFallback>
             </Avatar>
             <span className="hidden sm:inline">Account</span>
@@ -42,8 +42,8 @@ const UserMenu = () => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel className="flex items-center gap-2">
             <UserIcon className="w-4 h-4" />
-            {user?.user_metadata?.first_name || user?.user_metadata?.last_name ? (
-              <span>{user.user_metadata.first_name} {user.user_metadata.last_name}</span>
+            {user?.first_name || user?.last_name ? (
+              <span>{user.first_name} {user.last_name}</span>
             ) : (
               <span>{user?.email}</span>
             )}

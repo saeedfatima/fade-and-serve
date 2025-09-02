@@ -10,17 +10,17 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon, Clock, Banknote } from "lucide-react";
 import { format } from "date-fns";
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useDjangoAuth';
+import { apiClient } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 interface Service {
-  id: string;
+  id: number;
   name: string;
   description: string;
   price: number;
-  duration: number; // minutes
+  duration_minutes: number;
   is_active: boolean;
 }
 
@@ -50,17 +50,14 @@ const BookService = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data, error } = await supabase
-          .from('services')
-          .select('*')
-          .eq('is_active', true);
-
-        if (error) {
-          console.error('Error fetching services:', error);
+        const response = await apiClient.getServices();
+        
+        if (response.error) {
+          console.error('Error fetching services:', response.error);
           return;
         }
 
-        setServices(data || []);
+        setServices((response.data as Service[]) || []);
       } catch (error) {
         console.error('Error fetching services:', error);
       } finally {
@@ -113,21 +110,18 @@ const BookService = () => {
     setIsLoading(true);
     
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .insert({
-          user_id: user.id,
-          service_id: selectedServiceData.id,
-          appointment_date: format(selectedDate, 'yyyy-MM-dd'),
-          appointment_time: selectedTime,
-          notes: notes || null,
-        });
+      const response = await apiClient.createBooking({
+        service_id: selectedServiceData.id,
+        appointment_date: format(selectedDate, 'yyyy-MM-dd'),
+        appointment_time: selectedTime,
+        notes: notes || undefined,
+      });
 
-      if (error) {
-        console.error('Booking error:', error);
+      if (response.error) {
+        console.error('Booking error:', response.error);
         toast({
           title: "Booking Failed",
-          description: "Failed to create booking. Please try again.",
+          description: response.error,
           variant: "destructive",
         });
         return;
@@ -185,7 +179,7 @@ const BookService = () => {
                             </div>
                             <div className="flex items-center gap-1">
                               <Clock className="h-3 w-3" />
-                              <span className="text-sm">{service.duration} mins</span>
+                              <span className="text-sm">{service.duration_minutes} mins</span>
                             </div>
                           </div>
                         </div>
@@ -208,7 +202,7 @@ const BookService = () => {
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4 text-primary" />
-                          <span>{selectedServiceData.duration} mins</span>
+                          <span>{selectedServiceData.duration_minutes} mins</span>
                         </div>
                       </div>
                     </div>

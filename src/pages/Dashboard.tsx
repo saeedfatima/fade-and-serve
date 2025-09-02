@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useDjangoAuth';
+import { apiClient } from '@/lib/api';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProfileManager from '@/components/ProfileManager';
@@ -13,7 +13,7 @@ import UserMenu from '@/components/UserMenu';
 
 
 interface Booking {
-  id: string;
+  id: number;
   service_name: string;
   service_price: number;
   appointment_date: string;
@@ -42,33 +42,14 @@ const Dashboard = () => {
 
   const fetchUserBookings = async () => {
     try {
-      const { data, error } = await supabase
-        .from('bookings')
-        .select(`
-          *,
-          services(name, price)
-        `)
-        .eq('user_id', user?.id)
-        .order('appointment_date', { ascending: false });
+      const response = await apiClient.getBookings();
 
-      if (error) {
-        console.error('Error fetching bookings:', error);
+      if (response.error) {
+        console.error('Error fetching bookings:', response.error);
         return;
       }
 
-      // Transform data to match expected format
-      const transformedBookings = data?.map(booking => ({
-        id: booking.id,
-        service_name: booking.services?.name || 'Unknown Service',
-        service_price: booking.services?.price || 0,
-        appointment_date: booking.appointment_date,
-        appointment_time: booking.appointment_time,
-        status: booking.status,
-        notes: booking.notes,
-        created_at: booking.created_at,
-      })) || [];
-
-      setBookings(transformedBookings);
+      setBookings((response.data as Booking[]) || []);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     } finally {
@@ -91,15 +72,12 @@ const Dashboard = () => {
     }
   };
 
-  const handleCancelBooking = async (bookingId: string) => {
+  const handleCancelBooking = async (bookingId: number) => {
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .update({ status: 'cancelled' })
-        .eq('id', bookingId);
+      const response = await apiClient.updateBooking(bookingId, { status: 'cancelled' });
 
-      if (error) {
-        console.error('Error cancelling booking:', error);
+      if (response.error) {
+        console.error('Error cancelling booking:', response.error);
         return;
       }
 
@@ -126,7 +104,7 @@ const Dashboard = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold">Welcome back, {user?.email || 'User'}!</h1>
+            <h1 className="text-3xl font-bold">Welcome back, {user?.first_name ? `${user.first_name} ${user.last_name}` : user?.username || 'User'}!</h1>
             <p className="text-muted-foreground">Manage your appointments and profile</p>
           </div>
           <UserMenu />

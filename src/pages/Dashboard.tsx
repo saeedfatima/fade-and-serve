@@ -29,16 +29,17 @@ const Dashboard = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loadingBookings, setLoadingBookings] = useState(true);
 
-  // Redirect if not authenticated
-  if (!loading && !user) {
-    return <Navigate to="/auth" replace />;
-  }
-
   useEffect(() => {
     if (user) {
       fetchUserBookings();
     }
   }, [user]);
+
+  // All hooks must be called before any conditional returns
+  // Redirect if not authenticated
+  if (!loading && !user) {
+    return <Navigate to="/auth" replace />;
+  }
 
   const fetchUserBookings = async () => {
     try {
@@ -89,6 +90,7 @@ const Dashboard = () => {
   };
 
 
+  // Show loading state
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }

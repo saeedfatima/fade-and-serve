@@ -28,16 +28,17 @@ const StaffDashboard = () => {
   const [loadingBookings, setLoadingBookings] = useState(true);
   const { toast } = useToast();
 
-  // Redirect if not authenticated or not staff
-  if (!loading && (!user || (userRole !== 'staff' && userRole !== 'admin'))) {
-    return <Navigate to="/auth" replace />;
-  }
-
   useEffect(() => {
     if (user && (userRole === 'staff' || userRole === 'admin')) {
       fetchAllBookings();
     }
   }, [user, userRole]);
+
+  // All hooks must be called before any conditional returns
+  // Redirect if not authenticated or not staff
+  if (!loading && (!user || (userRole !== 'staff' && userRole !== 'admin'))) {
+    return <Navigate to="/auth" replace />;
+  }
 
   const fetchAllBookings = async () => {
     try {

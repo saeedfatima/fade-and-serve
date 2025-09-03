@@ -1,0 +1,41 @@
+services:
+  # Frontend Service
+  - type: web
+    name: barber-shop-frontend
+    env: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    domains:
+      - your-app-name.onrender.com
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://barber-shop-api.onrender.com/api
+
+  # Backend Service  
+  - type: web
+    name: barber-shop-api
+    env: python
+    region: oregon
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && ./entrypoint.sh
+    plan: free
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: barber-shop-db
+          property: connectionString
+      - key: ALLOWED_HOSTS
+        value: "barber-shop-api.onrender.com,localhost,127.0.0.1"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://barber-shop-frontend.onrender.com,http://localhost:3000,http://localhost:8080"
+
+# Database
+databases:
+  - name: barber-shop-db
+    databaseName: barber_shop
+    user: barber_shop_user
+    plan: free

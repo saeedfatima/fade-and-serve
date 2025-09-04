@@ -32,12 +32,13 @@ const services = [
   },
   {
     id: 4,
-    name: 'Royal Package (VIP)',
-    description: 'Premium grooming with VIP infrastructure services  brand new towel, brush, comb, washing brush, complimentary drink or hot tea (optional), relaxing foot wash, and rejuvenating face mask (optional).',
+    name: 'Royal VIP Experience',
+    description: 'Indulge in our premium grooming sanctuary featuring pristine brand-new towels, brushes, combs & washing tools. Enjoy complimentary beverages or hot tea, rejuvenating foot wash, and optional luxurious face mask treatments.',
     price: '₦10,000',
     duration: '90 min',
     icon: Crown,
-    popular: false
+    popular: true,
+    isVip: true
   },
   {
     id: 5,
@@ -80,12 +81,16 @@ const Services = () => {
                 key={service.id} 
                 className={`relative bg-card border-border hover:border-primary transition-all duration-300 hover:shadow-gold group ${
                   service.popular ? 'ring-2 ring-primary shadow-luxury' : ''
-                }`}
+                } ${service.isVip ? 'bg-gradient-to-br from-amber-50/50 to-yellow-100/30 dark:from-amber-950/20 dark:to-yellow-900/10 border-amber-300 dark:border-amber-700' : ''}`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {service.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-gold text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
-                    Most Popular
+                  <div className={`absolute -top-3 left-1/2 transform -translate-x-1/2 px-4 py-1 rounded-full text-sm font-semibold ${
+                    service.isVip 
+                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-900 shadow-lg border border-amber-200' 
+                      : 'bg-gradient-gold text-primary-foreground'
+                  }`}>
+                    {service.isVip ? '👑 VIP Experience' : 'Most Popular'}
                   </div>
                 )}
                 

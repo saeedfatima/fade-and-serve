@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Scissors, Sparkles, Zap, Crown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useDjangoAuth';
 
 const services = [
   {
@@ -61,6 +63,17 @@ const services = [
 ];
 
 const Services = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleBooking = (serviceName: string) => {
+    if (user) {
+      navigate(`/book-service?service=${encodeURIComponent(serviceName)}`);
+    } else {
+      navigate('/auth');
+    }
+  };
+
   return (
     <section id="services" className="py-20 bg-slate">
       <div className="container mx-auto px-4">
@@ -113,6 +126,7 @@ const Services = () => {
                   <Button 
                     className="w-full bg-gradient-gold text-primary-foreground hover:shadow-gold transition-all"
                     variant={service.popular ? "default" : "outline"}
+                    onClick={() => handleBooking(service.name)}
                   >
                     Book Now
                   </Button>

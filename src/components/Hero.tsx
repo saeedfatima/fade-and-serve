@@ -1,8 +1,25 @@
 import { Button } from '@/components/ui/button';
 import { Calendar, Star, MapPin } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useDjangoAuth';
 import heroImage from '@/assets/hero-barber-shop.jpg';
 
 const Hero = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleBooking = () => {
+    if (user) {
+      navigate('/book-service');
+    } else {
+      navigate('/auth');
+    }
+  };
+
+  const handleGallery = () => {
+    navigate('/gallery');
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -32,6 +49,7 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="bg-gradient-gold text-primary-foreground shadow-luxury hover:animate-gold-glow text-lg px-8 py-4"
+              onClick={handleBooking}
             >
               <Calendar className="h-5 w-5 mr-2" />
               Book Appointment
@@ -40,6 +58,7 @@ const Hero = () => {
               variant="outline" 
               size="lg" 
               className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-4"
+              onClick={handleGallery}
             >
               View Gallery
             </Button>

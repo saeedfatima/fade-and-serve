@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useDjangoAuth';
 import haircutStyles from '@/assets/haircut-styles.jpg';
 import barberCutting from '@/assets/barber-cutting.jpg';
 
@@ -68,6 +70,16 @@ const categories = ['All', 'Fade', 'Classic', 'Modern'];
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleBookStyle = (styleName: string) => {
+    if (user) {
+      navigate(`/book-service?style=${encodeURIComponent(styleName)}`);
+    } else {
+      navigate('/auth');
+    }
+  };
 
   const filteredHaircuts = selectedCategory === 'All' 
     ? haircutData 
@@ -143,6 +155,7 @@ const Gallery = () => {
                   <Button 
                     className="w-full mt-3 bg-gradient-gold text-primary-foreground hover:shadow-gold transition-all"
                     size="sm"
+                    onClick={() => handleBookStyle(haircut.name)}
                   >
                     Book This Style
                   </Button>

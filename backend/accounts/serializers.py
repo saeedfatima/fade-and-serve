@@ -47,11 +47,18 @@ class UserLoginSerializer(serializers.Serializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()
+    role = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone', 'gender', 'avatar', 'avatar_url', 'role', 'created_at')
-        read_only_fields = ('id', 'username', 'email', 'role', 'created_at')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone', 'gender', 'avatar', 'avatar_url', 'role', 'created_at', 'is_superuser', 'is_staff')
+        read_only_fields = ('id', 'username', 'email', 'role', 'created_at', 'is_superuser', 'is_staff')
+
+    def get_role(self, obj):
+        # Check if user is superuser first
+        if obj.is_superuser:
+            return 'admin'
+        return obj.role
 
     def get_avatar_url(self, obj):
         if obj.avatar:

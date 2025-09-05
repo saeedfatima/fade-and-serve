@@ -13,6 +13,8 @@ interface User {
   avatar_url?: string;
   role: string;
   created_at: string;
+  is_superuser?: boolean;
+  is_staff?: boolean;
 }
 
 interface AuthContextType {

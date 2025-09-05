@@ -95,8 +95,8 @@ const Dashboard = () => {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
-  // Redirect staff to staff dashboard
-  if (userRole === 'staff' || userRole === 'admin') {
+  // Redirect staff and admin to staff dashboard  
+  if (userRole === 'staff' || userRole === 'admin' || user?.is_superuser) {
     return <Navigate to="/staff-dashboard" replace />;
   }
 

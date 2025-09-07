@@ -91,6 +91,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signIn = async (email: string, password: string) => {
+    setLoading(true);
     const response = await apiClient.login({ email, password });
     
     if (response.data) {
@@ -99,9 +100,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUserRole((loggedInUser as any).role);
       apiClient.setToken(access as any);
       localStorage.setItem('refresh_token', refresh as any);
+      setLoading(false);
       return { error: null };
     }
     
+    setLoading(false);
     return { error: response.error };
   };
 

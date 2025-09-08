@@ -98,10 +98,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     setLoading(true);
+    console.log('Auth hook - starting sign in...');
     const response = await apiClient.login({ email, password });
+    console.log('Auth hook - login response:', response);
     
     if (response.data) {
       const { user: loggedInUser, access, refresh } = response.data as any;
+      console.log('Auth hook - setting user and token:', { user: loggedInUser, hasAccess: !!access });
       setUser(loggedInUser as any);
       setUserRole((loggedInUser as any).role);
       apiClient.setToken(access as any);
@@ -110,6 +113,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return { error: null };
     }
     
+    console.log('Auth hook - login failed:', response.error);
     setLoading(false);
     return { error: response.error };
   };

@@ -29,6 +29,8 @@ const Dashboard = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loadingBookings, setLoadingBookings] = useState(true);
 
+  console.log('Dashboard - render state:', { user: !!user, userRole, loading });
+
   useEffect(() => {
     if (user) {
       fetchUserBookings();

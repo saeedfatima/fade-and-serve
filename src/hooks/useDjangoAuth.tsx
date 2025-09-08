@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     // Check for existing token and fetch user profile
     const token = localStorage.getItem('access_token');
+    console.log('Auth hook - checking token:', !!token);
     if (token) {
       apiClient.setToken(token);
       fetchUserProfile();
@@ -54,13 +55,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const fetchUserProfile = async () => {
+    console.log('Auth hook - fetching user profile...');
     try {
       const response = await apiClient.getProfile();
+      console.log('Auth hook - profile response:', response);
       if (response.data) {
         setUser(response.data as any);
         setUserRole((response.data as any).role);
+        console.log('Auth hook - user set:', response.data);
       } else {
         // Token might be invalid, clear it
+        console.log('Auth hook - no profile data, clearing tokens');
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         apiClient.setToken(null);
@@ -71,6 +76,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.removeItem('refresh_token');
       apiClient.setToken(null);
     } finally {
+      console.log('Auth hook - setting loading to false');
       setLoading(false);
     }
   };

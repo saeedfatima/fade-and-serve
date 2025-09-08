@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,12 +24,23 @@ const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [showResetPassword, setShowResetPassword] = useState(false);
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, signUp, user, loading, userRole } = useAuth();
   const { toast } = useToast();
 
-  // Redirect if already authenticated
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
+  // Redirect if already authenticated (after loading is complete)
+  useEffect(() => {
+    if (!loading && user) {
+      if (userRole === 'staff' || userRole === 'admin' || user?.is_superuser) {
+        navigate('/staff-dashboard', { replace: true });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
+    }
+  }, [user, loading, userRole, navigate]);
+
+  // Show loading state
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -57,6 +68,7 @@ const Auth = () => {
         title: "Welcome back!",
         description: "You have been logged in successfully.",
       });
+      // Navigation will be handled by useEffect
     }
     setIsLoading(false);
   };
@@ -95,6 +107,7 @@ const Auth = () => {
         title: "Account created!",
         description: "You have been logged in successfully.",
       });
+      // Navigation will be handled by useEffect
     }
     setIsLoading(false);
   };

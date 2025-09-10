@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Calendar, Star, MapPin } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks/useDjangoAuth';
+import { useAuth } from '@/hooks/useAuth';
 import heroImage from '@/assets/hero-barber-shop.jpg';
 
 const Hero = () => {

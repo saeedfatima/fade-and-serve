@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar, Clock, Users, DollarSign, LogOut, Settings } from 'lucide-react';
-import { useAuth } from '@/hooks/useDjangoAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { apiClient } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';

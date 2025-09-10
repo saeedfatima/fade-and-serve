@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Scissors, Sparkles, Zap, Crown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks/useDjangoAuth';
+import { useAuth } from '@/hooks/useAuth';
 
 const services = [
   {

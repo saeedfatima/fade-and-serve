@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Calendar, Clock, Users, DollarSign, Star, Home } from 'lucide-react';
-import { useAuth } from '@/hooks/useDjangoAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { apiClient } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 

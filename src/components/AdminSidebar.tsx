@@ -14,7 +14,7 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-import { useAuth } from '@/hooks/useDjangoAuth';
+import { useAuth } from '@/hooks/useAuth';
 
 interface SidebarProps {
   collapsed?: boolean;

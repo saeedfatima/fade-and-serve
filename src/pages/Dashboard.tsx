@@ -5,27 +5,29 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { apiClient } from '@/lib/api';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProfileManager from '@/components/ProfileManager';
 import UserMenu from '@/components/UserMenu';
 
-
 interface Booking {
-  id: number;
-  service_name: string;
-  service_price: number;
+  id: string;
   appointment_date: string;
   appointment_time: string;
   status: string;
   notes?: string;
   created_at: string;
+  services?: {
+    name: string;
+    price: number;
+  };
 }
 
-
 const Dashboard = () => {
-  const { user, userRole, signOut, loading } = useAuth();
+  const { user, userRole, loading } = useAuth();
+  const { toast } = useToast();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loadingBookings, setLoadingBookings] = useState(true);
 
@@ -38,15 +40,23 @@ const Dashboard = () => {
   }, [user]);
 
   const fetchUserBookings = async () => {
+    if (!user) return;
+    
     try {
-      const response = await apiClient.getBookings();
+      const { data, error } = await supabase
+        .from('bookings')
+        .select(`
+          *,
+          services (
+            name,
+            price
+          )
+        `)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
 
-      if (response.error) {
-        console.error('Error fetching bookings:', response.error);
-        return;
-      }
-
-      setBookings((response.data as Booking[]) || []);
+      if (error) throw error;
+      setBookings(data || []);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     } finally {
@@ -69,22 +79,30 @@ const Dashboard = () => {
     }
   };
 
-  const handleCancelBooking = async (bookingId: number) => {
+  const handleCancelBooking = async (bookingId: string) => {
     try {
-      const response = await apiClient.updateBooking(bookingId, { status: 'cancelled' });
+      const { error } = await supabase
+        .from('bookings')
+        .update({ status: 'cancelled' })
+        .eq('id', bookingId);
 
-      if (response.error) {
-        console.error('Error cancelling booking:', response.error);
-        return;
-      }
-
+      if (error) throw error;
+      
       // Refresh bookings
       fetchUserBookings();
+      toast({
+        title: "Booking cancelled",
+        description: "Your appointment has been successfully cancelled.",
+      });
     } catch (error) {
       console.error('Error cancelling booking:', error);
+      toast({
+        title: "Error",
+        description: "Failed to cancel booking. Please try again.",
+        variant: "destructive",
+      });
     }
   };
-
 
   // Show loading state first
   if (loading) {
@@ -115,7 +133,6 @@ const Dashboard = () => {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* Quick Stats */}
-
           <Card>
             <CardHeader>
               <CardTitle>Appointment Stats</CardTitle>
@@ -177,7 +194,7 @@ const Dashboard = () => {
                     className="flex items-center justify-between p-4 border rounded-lg"
                   >
                     <div className="flex-1">
-                      <h3 className="font-semibold">{booking.service_name}</h3>
+                      <h3 className="font-semibold">{booking.services?.name || 'Service'}</h3>
                       <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
@@ -199,7 +216,7 @@ const Dashboard = () => {
                         {booking.status}
                       </Badge>
                       <p className="text-sm font-semibold mt-1">
-                        ₦{booking.service_price.toLocaleString()}
+                        ${booking.services?.price?.toLocaleString() || '0'}
                       </p>
                       {booking.status === 'pending' && (
                         <Button

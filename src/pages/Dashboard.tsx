@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock } from 'lucide-react';
-import { useAuth } from '@/hooks/useDjangoAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { apiClient } from '@/lib/api';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -97,7 +97,7 @@ const Dashboard = () => {
   }
 
   // Redirect staff and admin to staff dashboard  
-  if (userRole === 'staff' || userRole === 'admin' || user?.is_superuser) {
+  if (userRole === 'staff' || userRole === 'admin') {
     return <Navigate to="/staff-dashboard" replace />;
   }
 
@@ -107,7 +107,7 @@ const Dashboard = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold">Welcome back, {user?.first_name ? `${user.first_name} ${user.last_name}` : user?.username || 'User'}!</h1>
+            <h1 className="text-3xl font-bold">Welcome back, {user?.email || 'User'}!</h1>
             <p className="text-muted-foreground">Manage your appointments and profile</p>
           </div>
           <UserMenu />

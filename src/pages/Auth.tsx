@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useAuth } from '@/hooks/useDjangoAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft } from 'lucide-react';
 
@@ -30,7 +30,7 @@ const Auth = () => {
   // Redirect if already authenticated (after loading is complete)
   useEffect(() => {
     if (!loading && user) {
-      if (userRole === 'staff' || userRole === 'admin' || user?.is_superuser) {
+      if (userRole === 'staff' || userRole === 'admin') {
         navigate('/staff-dashboard', { replace: true });
       } else {
         navigate('/dashboard', { replace: true });
@@ -94,7 +94,7 @@ const Auth = () => {
     }
 
     setIsLoading(true);
-    const { error } = await signUp(signupData);
+    const { error } = await signUp(signupData.email, signupData.password, signupData.first_name, signupData.last_name);
     
     if (error) {
       toast({
